@@ -1,6 +1,9 @@
 package com.hotel.dao;
 
 import com.hotel.pojo.Order;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OrderMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,15 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    List<Order> getOrderList();
+
+    List<Order> selectOrderByRoomStatus(Integer roomStatus);
+
+    int updateRoomStatus(@Param("orderId") Integer orderId, @Param("roomStatus") Integer roomStatus);
+
+    Order selectByUserId(Integer userId);
+
+    List<Order> selectOrderByAttribute(Order order);
+
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 public class Room {
     private Integer id;
 
-    private Integer number;
+    private String number;
 
     private String name;
 
@@ -16,7 +16,7 @@ public class Room {
 
     private BigDecimal price;
 
-    private String score;
+    private Double score;
 
     private Integer status;
 
@@ -26,11 +26,15 @@ public class Room {
 
     private String subImages;
 
+    private String reserveTime;
+
+    private String reserveEndTime;
+
     private Date createTime;
 
     private Date updateTime;
 
-    public Room(Integer id, Integer number, String name, String intro, String category, BigDecimal price, String score, Integer status, String detail, String mainImage, String subImages, Date createTime, Date updateTime) {
+    public Room(Integer id, String number, String name, String intro, String category, BigDecimal price, Double score, Integer status, String detail, String mainImage, String subImages, String reserveTime, String reserveEndTime, Date createTime, Date updateTime) {
         this.id = id;
         this.number = number;
         this.name = name;
@@ -42,6 +46,8 @@ public class Room {
         this.detail = detail;
         this.mainImage = mainImage;
         this.subImages = subImages;
+        this.reserveTime = reserveTime;
+        this.reserveEndTime = reserveEndTime;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -58,12 +64,12 @@ public class Room {
         this.id = id;
     }
 
-    public Integer getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setNumber(String number) {
+        this.number = number == null ? null : number.trim();
     }
 
     public String getName() {
@@ -98,12 +104,12 @@ public class Room {
         this.price = price;
     }
 
-    public String getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(String score) {
-        this.score = score == null ? null : score.trim();
+    public void setScore(Double score) {
+        this.score = score;
     }
 
     public Integer getStatus() {
@@ -136,6 +142,22 @@ public class Room {
 
     public void setSubImages(String subImages) {
         this.subImages = subImages == null ? null : subImages.trim();
+    }
+
+    public String getReserveTime() {
+        return reserveTime;
+    }
+
+    public void setReserveTime(String reserveTime) {
+        this.reserveTime = reserveTime == null ? null : reserveTime.trim();
+    }
+
+    public String getReserveEndTime() {
+        return reserveEndTime;
+    }
+
+    public void setReserveEndTime(String reserveEndTime) {
+        this.reserveEndTime = reserveEndTime == null ? null : reserveEndTime.trim();
     }
 
     public Date getCreateTime() {

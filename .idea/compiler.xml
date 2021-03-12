@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="hotel" options="-extdirs /Users/yangjiaxin/IdeaProjects/hotel/src/main/webapp/WEB-INF/lib" />
+      <module name="hotel" options="-extdirs $PROJECT_DIR$/src/main/webapp/WEB-INF/lib" />
     </option>
   </component>
 </project>
