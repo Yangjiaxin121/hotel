@@ -260,16 +260,16 @@ public class RoomServiceImpl implements IRoomService {
 
         int flag = 0;
         for (int i = 0; i < reserveTimeArray.length; i++){
-            if (reserveTimeNew.compareTo(reserveTimeArray[i]) > 0 && reserveTimeNew.compareTo(reserveEndTimeArray[i]) < 0){
+            if (reserveTimeNew.compareTo(reserveTimeArray[i]) >= 0 && reserveTimeNew.compareTo(reserveEndTimeArray[i]) <= 0){
                 flag = 1;
             }
-            if (reserveEndTimeNew.compareTo(reserveTimeArray[i]) > 0 && reserveEndTimeNew.compareTo(reserveEndTimeArray[i]) < 0){
+            if (reserveEndTimeNew.compareTo(reserveTimeArray[i]) >= 0 && reserveEndTimeNew.compareTo(reserveEndTimeArray[i]) <= 0){
                 flag = 1;
             }
-            if (reserveTimeNew.compareTo(reserveTimeArray[i]) < 0 && reserveEndTimeNew.compareTo(reserveEndTimeArray[i]) > 0){
+            if (reserveTimeNew.compareTo(reserveTimeArray[i]) <= 0 && reserveEndTimeNew.compareTo(reserveEndTimeArray[i]) >= 0){
                 flag = 1;
             }
-            if (reserveEndTimeNew.compareTo(reserveTimeArray[i]) > 0 && reserveEndTimeNew.compareTo(reserveEndTimeArray[i]) < 0){
+            if (reserveEndTimeNew.compareTo(reserveTimeArray[i]) >= 0 && reserveEndTimeNew.compareTo(reserveEndTimeArray[i]) <= 0){
                 flag = 1;
             }
 

@@ -41,17 +41,12 @@ public class UserAdminController {
 
 
         ServerResponse<User> response = iUserService.login(username,password);
-        if(response.isSuccess()){
-            User user = response.getData();
-            if(user.getRole() == Const.Role.ROLE_ADMIN){
+        Integer userId = response.getData().getId();
 
-                return ServerResponse.createBySuccess(user.getId());
-            }else{
-                return ServerResponse.createByErrorMessage("不是管理员,无法登录");
-            }
-        }
-        return response;
+        return ServerResponse.createBySuccess(userId);
     }
+
+
 
     @ApiOperation(value="获取所有用户", notes="获取所有用户",httpMethod = "POST")
     @ApiImplicitParams({

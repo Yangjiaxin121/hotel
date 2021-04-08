@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.ManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.pojo.Manager" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="real_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="jobs" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="id_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sex" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="role" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, password, email, phone, real_name, jobs, id_number, sex, age, role, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from hotel_manager
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hotel_manager
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hotel.pojo.Manager" >
+    insert into hotel_manager (id, username, password,
+                               email, phone, real_name,
+                               jobs, id_number, sex,
+                               age, role, create_time,
+                               update_time)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+            #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+            #{jobs,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+            #{age,jdbcType=INTEGER}, #{role,jdbcType=INTEGER}, now(),
+            now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.pojo.Manager" >
+    insert into hotel_manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="jobs != null" >
+        jobs,
+      </if>
+      <if test="idNumber != null" >
+        id_number,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobs != null" >
+        #{jobs,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        now(),
+      </if>
+      <if test="updateTime != null" >
+        now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.pojo.Manager" >
+    update hotel_manager
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobs != null" >
+        jobs = #{jobs,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = now(),
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.pojo.Manager" >
+    update hotel_manager
+    set username = #{username,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        real_name = #{realName,jdbcType=VARCHAR},
+        jobs = #{jobs,jdbcType=VARCHAR},
+        id_number = #{idNumber,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=VARCHAR},
+        age = #{age,jdbcType=INTEGER},
+        role = #{role,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getManagerList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from hotel_manager
+    where role = 1
+    order by id asc
+  </select>
+
+
+  <select id="checkUsername" parameterType="string" resultType="int">
+    select count(1) from hotel_manager
+    where username = #{username}
+  </select>
+  <select id="checkEmail" parameterType="string" resultType="int">
+    select count(1) from hotel_manager
+    where email = #{email}
+  </select>
+
+  <select id="selectManagerByUsername1" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from hotel_manager
+    <where>
+
+      and username  = #{username}
+      and role = 1
+    </where>
+
+  </select>
+
+
+  <select id="selectManagerByUsername" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from hotel_manager
+    <where>
+
+      and username like "%"#{username,jdbcType=VARCHAR}"%"
+      and role = 1
+    </where>
+    order by id asc
+  </select>
+
+
+  <select id="checkUsernameById" parameterType="map" resultType="int">
+    select count(1) from hotel_manager
+    where username = #{username}
+      and id != #{id}
+  </select>
+
+  <update id="updateRole" parameterType="map">
+    update hotel_manager
+    set role = #{role}
+    where id = #{userId}
+  </update>
+
+  <select id="selectManagerByAttribute" resultMap="BaseResultMap" parameterType="com.hotel.pojo.Manager">
+    select <include refid="Base_Column_List"/>
+    from hotel_manager
+    <where>
+      <if test="id != null and id != ''">
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="username != null and username != ''">
+        and username like "%"#{username,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="email != null and email != ''">
+        and email like "%"#{email,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="phone != null and phone != ''">
+        and phone like "%"#{phone,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="realName != null and realName != ''">
+        and real_name like "%"#{realName,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="jobs != null and jobs != ''">
+        and jobs = #{jobs,jdbcType=VARCHAR}
+      </if>
+      <if test="idNumber != null and idNumber != ''">
+        and id_number like "%"#{idNumber,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="sex != null and sex != ''">
+        and sex = #{sex,jdbcType=VARCHAR}
+      </if>
+      <if test="age != null and age != ''">
+        and age = #{age,jdbcType=INTEGER}
+      </if>
+      and role = 1
+    </where>
+  </select>
+
+  <select id="selectLogin" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hotel_manager
+    where username = #{username}
+    and password = #{password}
+  </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+

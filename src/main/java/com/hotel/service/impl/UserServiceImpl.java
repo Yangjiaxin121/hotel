@@ -5,11 +5,14 @@ import com.github.pagehelper.PageInfo;
 import com.hotel.common.Const;
 import com.hotel.common.ServerResponse;
 import com.hotel.common.TokenCache;
+import com.hotel.dao.ManagerMapper;
 import com.hotel.dao.UserMapper;
+import com.hotel.pojo.Manager;
 import com.hotel.pojo.User;
 import com.hotel.service.IUserService;
 import com.hotel.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    ManagerMapper managerMapper;
 
     @Override
     public ServerResponse<User> login(String username, String password) {
@@ -85,6 +91,12 @@ public class UserServiceImpl implements IUserService {
         //user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
 
         int resultCount = userMapper.insert(user);
+
+        Manager manager = new Manager();
+        BeanUtils.copyProperties(user,manager);
+        managerMapper.insert(manager);
+
+
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("注册失败");
         }
@@ -201,8 +213,23 @@ public class UserServiceImpl implements IUserService {
 //        updateUser.setQuestion(user.getQuestion());
 //        updateUser.setAnswer(user.getAnswer());
 
+
+        User user1 = userMapper.selectByPrimaryKey(user.getId());
+        if (user1.getRole() == 1){
+            String username = user1.getUsername();
+            Manager manager = new Manager();
+            BeanUtils.copyProperties(user,manager);
+
+            Manager manager1 = managerMapper.selectManagerByUsername1(username);
+            manager.setId(manager1.getId());
+            managerMapper.updateByPrimaryKeySelective(manager);
+        }
+
+
         int updateCount = userMapper.updateByPrimaryKeySelective(user);
+
         if (updateCount > 0) {
+
             return ServerResponse.createBySuccessMessage("更新个人信息成功");
         }
         return ServerResponse.createByErrorMessage("更新个人信息失败");
@@ -215,7 +242,7 @@ public class UserServiceImpl implements IUserService {
         if (user == null) {
             return ServerResponse.createByErrorMessage("找不到当前用户");
         }
-        user.setPassword(StringUtils.EMPTY);
+        //user.setPassword(StringUtils.EMPTY);
         return ServerResponse.createBySuccess(user);
     }
 
@@ -248,7 +275,17 @@ public class UserServiceImpl implements IUserService {
         if (userId == null) {
             return ServerResponse.createByErrorMessage("userId不能为空");
         }
+
+        User user1 = userMapper.selectByPrimaryKey(userId);
+        if (user1.getRole() == 1){
+            String username = user1.getUsername();
+            Manager manager1 = managerMapper.selectManagerByUsername1(username);
+            managerMapper.deleteByPrimaryKey(manager1.getId());
+        }
+
+
         int checkValue = userMapper.deleteByPrimaryKey(userId);
+        managerMapper.deleteByPrimaryKey(userId);
         if (checkValue > 0) {
             return ServerResponse.createBySuccessMessage("删除成功");
         }

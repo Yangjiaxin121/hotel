@@ -75,8 +75,11 @@
 <!--            <columnOverride column="detail" jdbcType="VARCHAR" />-->
 <!--            <columnOverride column="sub_images" jdbcType="VARCHAR" />-->
 <!--        </table>-->
-        <table tableName="room_comments" domainObjectName="RoomComments" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+<!--        <table tableName="room_comments" domainObjectName="RoomComments" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
+
+        <table tableName="hotel_manager" domainObjectName="Manager" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="hotel_admin" domainObjectName="Admin" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
 
         <!-- geelynote mybatis插件的搭建 -->

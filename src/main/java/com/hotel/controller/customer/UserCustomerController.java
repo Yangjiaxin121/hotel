@@ -74,12 +74,16 @@ public class UserCustomerController {
 
     @RequestMapping(value = "get_user_info.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> getUserInfo(HttpSession session){
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if(user != null){
-            return ServerResponse.createBySuccess(user);
-        }
-        return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
+    public ServerResponse<User> getUserInfo(@RequestBody Map map){
+
+        Integer userId = Integer.valueOf(map.get("userId").toString());
+
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        if(user != null){
+//            return ServerResponse.createBySuccess(user);
+//        }
+
+        return iUserService.getInformation(userId);
     }
 
 
@@ -123,11 +127,14 @@ public class UserCustomerController {
 
         String passwordOld = map.get("passwordOld").toString();
         String passwordNew = map.get("passwordNew").toString();
+        Integer userId = Integer.valueOf(map.get("userId").toString());
 
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null){
-            return ServerResponse.createByErrorMessage("用户未登录");
-        }
+        User user = iUserService.getInformation(userId).getData();
+
+//        User user = (User)session.getAttribute(Const.CURRENT_USER);
+//        if(user == null){
+//            return ServerResponse.createByErrorMessage("用户未登录");
+//        }
         return iUserService.resetPassword(passwordOld,passwordNew,user);
     }
 
