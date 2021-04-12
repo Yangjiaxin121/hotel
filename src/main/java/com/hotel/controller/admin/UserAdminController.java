@@ -41,9 +41,13 @@ public class UserAdminController {
 
 
         ServerResponse<User> response = iUserService.login(username,password);
-        Integer userId = response.getData().getId();
+        User user = response.getData();
+        if (user != null){
+            Integer userId = response.getData().getId();
+            return ServerResponse.createBySuccess(userId);
+        }
 
-        return ServerResponse.createBySuccess(userId);
+        return response;
     }
 
 
