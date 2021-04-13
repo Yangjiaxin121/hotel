@@ -10,6 +10,8 @@ public class Order {
 
     private Integer roomId;
 
+    private Integer roomNumber;
+
     private Integer userId;
 
     private String realName;
@@ -38,16 +40,17 @@ public class Order {
 
     private Integer totalDays;
 
+    private Integer isCommented;
+
     private Date createTime;
 
     private Date updateTime;
 
-    private Integer roomNumber;
-
-    public Order(Integer id, Long orderNo, Integer roomId, Integer userId, String realName, BigDecimal payment, BigDecimal totalPayment, Integer paymentType, Integer status, Integer roomStatus, Date paymentTime, Date intakeTime, Date endTime, Date reserveTime, Date reserveEndTime, Integer stayDays, Integer totalDays, Date createTime, Date updateTime, Integer roomNumber) {
+    public Order(Integer id, Long orderNo, Integer roomId, Integer roomNumber, Integer userId, String realName, BigDecimal payment, BigDecimal totalPayment, Integer paymentType, Integer status, Integer roomStatus, Date paymentTime, Date intakeTime, Date endTime, Date reserveTime, Date reserveEndTime, Integer stayDays, Integer totalDays, Integer isCommented, Date createTime, Date updateTime) {
         this.id = id;
         this.orderNo = orderNo;
         this.roomId = roomId;
+        this.roomNumber = roomNumber;
         this.userId = userId;
         this.realName = realName;
         this.payment = payment;
@@ -62,9 +65,9 @@ public class Order {
         this.reserveEndTime = reserveEndTime;
         this.stayDays = stayDays;
         this.totalDays = totalDays;
+        this.isCommented = isCommented;
         this.createTime = createTime;
         this.updateTime = updateTime;
-        this.roomNumber = roomNumber;
     }
 
     public Order() {
@@ -93,6 +96,14 @@ public class Order {
 
     public void setRoomId(Integer roomId) {
         this.roomId = roomId;
+    }
+
+    public Integer getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(Integer roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
     public Integer getUserId() {
@@ -207,6 +218,14 @@ public class Order {
         this.totalDays = totalDays;
     }
 
+    public Integer getIsCommented() {
+        return isCommented;
+    }
+
+    public void setIsCommented(Integer isCommented) {
+        this.isCommented = isCommented;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -221,13 +240,5 @@ public class Order {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Integer getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(Integer roomNumber) {
-        this.roomNumber = roomNumber;
     }
 }

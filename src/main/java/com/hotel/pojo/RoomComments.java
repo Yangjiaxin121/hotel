@@ -11,6 +11,8 @@ public class RoomComments {
 
     private Integer roomId;
 
+    private String username;
+
     private String roomName;
 
     private Integer commentLevel;
@@ -21,11 +23,12 @@ public class RoomComments {
 
     private Date updatedTime;
 
-    public RoomComments(Integer id, Integer orderId, Integer userId, Integer roomId, String roomName, Integer commentLevel, String content, Date createdTime, Date updatedTime) {
+    public RoomComments(Integer id, Integer orderId, Integer userId, Integer roomId, String username, String roomName, Integer commentLevel, String content, Date createdTime, Date updatedTime) {
         this.id = id;
         this.orderId = orderId;
         this.userId = userId;
         this.roomId = roomId;
+        this.username = username;
         this.roomName = roomName;
         this.commentLevel = commentLevel;
         this.content = content;
@@ -67,6 +70,14 @@ public class RoomComments {
 
     public void setRoomId(Integer roomId) {
         this.roomId = roomId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
     }
 
     public String getRoomName() {

@@ -39,6 +39,7 @@ public class RoomCommentCustomerController {
         Integer roomId = Integer.valueOf(map.get("roomId").toString());
         Integer commentLevel = Integer.valueOf(map.get("commentLevel").toString());
         String content = map.get("content").toString();
+        String username = map.get("username").toString();
 
         Order order = (Order) iOrderService.getOrderDetail(orderId).getData();
         if (order == null){
@@ -59,6 +60,7 @@ public class RoomCommentCustomerController {
         roomComments.setOrderId(orderId);
         roomComments.setCommentLevel(commentLevel);
         roomComments.setContent(content);
+        roomComments.setUsername(username);
 
         roomComments.setRoomName(room.getName());
 

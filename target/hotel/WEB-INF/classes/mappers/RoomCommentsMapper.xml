@@ -7,6 +7,7 @@
       <arg column="order_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="room_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="room_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="comment_level" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -15,7 +16,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_id, user_id, room_id, room_name, comment_level, content, created_time, 
+    id, order_id, user_id, room_id, username, room_name, comment_level, content, created_time, 
     updated_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -30,13 +31,13 @@
   </delete>
   <insert id="insert" parameterType="com.hotel.pojo.RoomComments">
     insert into room_comments (id, order_id, user_id, 
-      room_id, room_name, comment_level, 
-      content, created_time, updated_time
-      )
+      room_id, username, room_name, 
+      comment_level, content, created_time, 
+      updated_time)
     values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{roomId,jdbcType=INTEGER}, #{roomName,jdbcType=VARCHAR}, #{commentLevel,jdbcType=INTEGER}, 
-      #{content,jdbcType=VARCHAR}, now(), now()
-      )
+      #{roomId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{roomName,jdbcType=VARCHAR}, 
+      #{commentLevel,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, now(),
+      now())
   </insert>
   <insert id="insertSelective" parameterType="com.hotel.pojo.RoomComments">
     insert into room_comments
@@ -52,6 +53,9 @@
       </if>
       <if test="roomId != null">
         room_id,
+      </if>
+      <if test="username != null">
+        username,
       </if>
       <if test="roomName != null">
         room_name,
@@ -82,6 +86,9 @@
       <if test="roomId != null">
         #{roomId,jdbcType=INTEGER},
       </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
       <if test="roomName != null">
         #{roomName,jdbcType=VARCHAR},
       </if>
@@ -111,6 +118,9 @@
       <if test="roomId != null">
         room_id = #{roomId,jdbcType=INTEGER},
       </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
       <if test="roomName != null">
         room_name = #{roomName,jdbcType=VARCHAR},
       </if>
@@ -134,6 +144,7 @@
     set order_id = #{orderId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       room_id = #{roomId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
       room_name = #{roomName,jdbcType=VARCHAR},
       comment_level = #{commentLevel,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
@@ -141,6 +152,7 @@
       updated_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 
   <select id="selectCommentsByAttribute" parameterType="com.hotel.pojo.RoomComments" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />

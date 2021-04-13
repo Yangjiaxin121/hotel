@@ -3,7 +3,9 @@ package com.hotel.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hotel.common.ServerResponse;
+import com.hotel.dao.OrderMapper;
 import com.hotel.dao.RoomCommentsMapper;
+import com.hotel.pojo.Order;
 import com.hotel.pojo.Room;
 import com.hotel.pojo.RoomComments;
 import com.hotel.service.IRoomCommentsService;
@@ -19,12 +21,20 @@ public class RoomCommentsService implements IRoomCommentsService {
     @Autowired
     RoomCommentsMapper roomCommentsMapper;
 
+    @Autowired
+    OrderMapper orderMapper;
+
 
     @Override
     public ServerResponse addComments(RoomComments roomComments) {
 
         int checkValue = roomCommentsMapper.insert(roomComments);
         if (checkValue > 0){
+            Order order = new Order();
+            order.setId(roomComments.getOrderId());
+            order.setIsCommented(1);
+            orderMapper.updateByPrimaryKeySelective(order);
+
             return ServerResponse.createBySuccessMessage("评论成功");
         }
         return ServerResponse.createByErrorMessage("评论失败");
@@ -59,7 +69,13 @@ public class RoomCommentsService implements IRoomCommentsService {
 
         int checkValue = roomCommentsMapper.deleteByPrimaryKey(commentsId);
 
+        RoomComments roomComments = roomCommentsMapper.selectByPrimaryKey(commentsId);
+
         if (checkValue > 0){
+            Order order = new Order();
+            order.setId(roomComments.getOrderId());
+            order.setIsCommented(0);
+            orderMapper.updateByPrimaryKeySelective(order);
             return ServerResponse.createBySuccessMessage("删除成功");
         }
         return ServerResponse.createByErrorMessage("删除失败");

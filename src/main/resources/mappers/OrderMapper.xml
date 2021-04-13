@@ -6,6 +6,7 @@
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="order_no" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="room_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="room_number" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="real_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="payment" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
@@ -20,15 +21,15 @@
       <arg column="reserve_end_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="stay_days" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="total_days" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="is_commented" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="room_number" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_no, room_id, user_id, real_name, payment, total_payment, payment_type, 
+    id, order_no, room_id, room_number, user_id, real_name, payment, total_payment, payment_type, 
     status, room_status, payment_time, intake_time, end_time, reserve_time, reserve_end_time, 
-    stay_days, total_days, create_time, update_time, room_number
+    stay_days, total_days, is_commented, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -41,23 +42,22 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.hotel.pojo.Order">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-              SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into hotel_order (id, order_no, room_id, 
-      user_id, real_name, payment, 
-      total_payment, payment_type, status, 
-      room_status, payment_time, intake_time, 
-      end_time, reserve_time, reserve_end_time, 
-      stay_days, total_days, create_time, 
-      update_time, room_number)
+      room_number, user_id, real_name, 
+      payment, total_payment, payment_type, 
+      status, room_status, payment_time, 
+      intake_time, end_time, reserve_time, 
+      reserve_end_time, stay_days, total_days, 
+      is_commented, create_time, update_time
+      )
     values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{roomId,jdbcType=INTEGER}, 
-      #{userId,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, #{payment,jdbcType=DECIMAL}, 
-      #{totalPayment,jdbcType=DECIMAL}, #{paymentType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{roomStatus,jdbcType=INTEGER}, #{paymentTime,jdbcType=TIMESTAMP}, #{intakeTime,jdbcType=TIMESTAMP}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{reserveTime,jdbcType=TIMESTAMP}, #{reserveEndTime,jdbcType=TIMESTAMP}, 
-      #{stayDays,jdbcType=INTEGER}, #{totalDays,jdbcType=INTEGER}, now(),
-      now(), #{roomNumber,jdbcType=INTEGER})
+      #{roomNumber,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, 
+      #{payment,jdbcType=DECIMAL}, #{totalPayment,jdbcType=DECIMAL}, #{paymentType,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{roomStatus,jdbcType=INTEGER}, #{paymentTime,jdbcType=TIMESTAMP}, 
+      #{intakeTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{reserveTime,jdbcType=TIMESTAMP}, 
+      #{reserveEndTime,jdbcType=TIMESTAMP}, #{stayDays,jdbcType=INTEGER}, #{totalDays,jdbcType=INTEGER}, 
+      #{isCommented,jdbcType=INTEGER}, now(), now()
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.hotel.pojo.Order">
     insert into hotel_order
@@ -70,6 +70,9 @@
       </if>
       <if test="roomId != null">
         room_id,
+      </if>
+      <if test="roomNumber != null">
+        room_number,
       </if>
       <if test="userId != null">
         user_id,
@@ -113,14 +116,14 @@
       <if test="totalDays != null">
         total_days,
       </if>
+      <if test="isCommented != null">
+        is_commented,
+      </if>
       <if test="createTime != null">
         create_time,
       </if>
       <if test="updateTime != null">
         update_time,
-      </if>
-      <if test="roomNumber != null">
-        room_number,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -132,6 +135,9 @@
       </if>
       <if test="roomId != null">
         #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomNumber != null">
+        #{roomNumber,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
@@ -175,14 +181,14 @@
       <if test="totalDays != null">
         #{totalDays,jdbcType=INTEGER},
       </if>
+      <if test="isCommented != null">
+        #{isCommented,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         now(),
       </if>
       <if test="updateTime != null">
         now(),
-      </if>
-      <if test="roomNumber != null">
-        #{roomNumber,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -194,6 +200,9 @@
       </if>
       <if test="roomId != null">
         room_id = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomNumber != null">
+        room_number = #{roomNumber,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
@@ -237,14 +246,14 @@
       <if test="totalDays != null">
         total_days = #{totalDays,jdbcType=INTEGER},
       </if>
+      <if test="isCommented != null">
+        is_commented = #{isCommented,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null">
         update_time = now(),
-      </if>
-      <if test="roomNumber != null">
-        room_number = #{roomNumber,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -253,6 +262,7 @@
     update hotel_order
     set order_no = #{orderNo,jdbcType=BIGINT},
       room_id = #{roomId,jdbcType=INTEGER},
+      room_number = #{roomNumber,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       real_name = #{realName,jdbcType=VARCHAR},
       payment = #{payment,jdbcType=DECIMAL},
@@ -267,9 +277,9 @@
       reserve_end_time = #{reserveEndTime,jdbcType=TIMESTAMP},
       stay_days = #{stayDays,jdbcType=INTEGER},
       total_days = #{totalDays,jdbcType=INTEGER},
+      is_commented = #{isCommented,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = now(),
-      room_number = #{roomNumber,jdbcType=INTEGER}
+      update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
 
