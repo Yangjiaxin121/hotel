@@ -218,8 +218,9 @@ public class OrderServiceImpl implements IOrderService {
         order.setStatus(Const.OrderStatusEnum.NO_PAY.getCode());
         order.setRoomStatus(Const.RoomStatus.RESERVED);
 
-        int checkValue = orderMapper.insert(order);
+
      //   int checkValue1 = roomMapper.updateRoomStatus(order.getRoomId(),Const.RoomStatus.RESERVED);
+
 
         Room room1 = new Room();
         room1.setId(order.getRoomId());
@@ -233,6 +234,8 @@ public class OrderServiceImpl implements IOrderService {
         if (!flag){
             return ServerResponse.createByErrorMessage("时间冲突");
         }
+
+        int checkValue = orderMapper.insert(order);
 
         String reserveTime = room.getReserveTime();
         String reserveEndTime = room.getReserveEndTime();
@@ -250,7 +253,7 @@ public class OrderServiceImpl implements IOrderService {
         int checkValue1 = roomMapper.updateByPrimaryKeySelective(room1);
 
         if (checkValue > 0 && checkValue1 > 0){
-            return ServerResponse.createBySuccessMessage("创建成功");
+            return ServerResponse.createBySuccess(order.getId());
         }
         return ServerResponse.createByErrorMessage("创建失败");
     }
