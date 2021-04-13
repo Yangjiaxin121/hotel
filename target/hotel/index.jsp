@@ -7,7 +7,7 @@
 
 
 springmvc上传文件
-<form name="form1" action="/dream/admin/room/upload.do" method="post" enctype="multipart/form-data">
+<form name="form1" action="/hotel/dream/admin/room/upload.do" method="post" enctype="multipart/form-data">
     <input type="file" name="upload_file" />
     <input type="submit" value="springmvc上传文件" />
 </form>

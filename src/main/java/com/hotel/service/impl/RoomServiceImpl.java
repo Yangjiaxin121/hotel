@@ -241,6 +241,16 @@ public class RoomServiceImpl implements IRoomService {
         return ServerResponse.createBySuccess(pageInfo);
     }
 
+    @Override
+    public ServerResponse deleteRoomById(Integer roomId) {
+
+        int checkValue = roomMapper.deleteByPrimaryKey(roomId);
+        if (checkValue > 0){
+            return ServerResponse.createBySuccessMessage("删除成功");
+        }
+        return ServerResponse.createByErrorMessage("删除失败");
+    }
+
 
     /**
      * 判断房间时间

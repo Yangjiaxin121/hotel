@@ -9,6 +9,7 @@ import com.hotel.pojo.User;
 import com.hotel.service.IOrderService;
 import com.hotel.service.IRoomCommentsService;
 import com.hotel.service.IRoomService;
+import com.hotel.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,9 @@ public class RoomCommentCustomerController {
     @Autowired
     IRoomService iRoomService;
 
+    @Autowired
+    IUserService iUserService;
+
     @RequestMapping("add_comments.do")
     @ResponseBody
     public ServerResponse addComments(@RequestBody Map map) {
@@ -39,7 +43,7 @@ public class RoomCommentCustomerController {
         Integer roomId = Integer.valueOf(map.get("roomId").toString());
         Integer commentLevel = Integer.valueOf(map.get("commentLevel").toString());
         String content = map.get("content").toString();
-        String username = map.get("username").toString();
+
 
         Order order = (Order) iOrderService.getOrderDetail(orderId).getData();
         if (order == null){
@@ -54,13 +58,15 @@ public class RoomCommentCustomerController {
             return ServerResponse.createByErrorMessage("参数错误");
         }
 
+        User user = iUserService.getInformation(userId).getData();
+
         RoomComments roomComments = new RoomComments();
         roomComments.setUserId(userId);
         roomComments.setRoomId(roomId);
         roomComments.setOrderId(orderId);
         roomComments.setCommentLevel(commentLevel);
         roomComments.setContent(content);
-        roomComments.setUsername(username);
+        roomComments.setUsername(user.getUsername());
 
         roomComments.setRoomName(room.getName());
 

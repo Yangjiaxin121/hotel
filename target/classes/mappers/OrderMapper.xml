@@ -42,6 +42,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.hotel.pojo.Order">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into hotel_order (id, order_no, room_id, 
       room_number, user_id, real_name, 
       payment, total_payment, payment_type, 
@@ -60,6 +63,9 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.hotel.pojo.Order">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into hotel_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

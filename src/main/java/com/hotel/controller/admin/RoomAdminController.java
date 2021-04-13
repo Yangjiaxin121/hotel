@@ -180,6 +180,16 @@ public class RoomAdminController {
 
     }
 
+    @RequestMapping(value="delete_room_by_id.do")
+    @ResponseBody
+    public ServerResponse getRoomByAttribute(@RequestBody Map map ){
+
+        Integer roomId = Integer.valueOf(map.get("roomId").toString());
+
+        return iRoomService.deleteRoomById(roomId);
+
+    }
+
 
 
     @RequestMapping("upload.do")

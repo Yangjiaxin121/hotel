@@ -22,4 +22,6 @@ public interface IRoomService {
     ServerResponse getRoomByAttribute(Room room, Integer pageNum, Integer pageSize);
 
     ServerResponse searchRoomByTime(String reserveTime, String reserveEndTime, Integer pageNum, Integer pageSize);
+
+    ServerResponse deleteRoomById(Integer roomId);
 }
