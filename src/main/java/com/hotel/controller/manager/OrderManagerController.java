@@ -33,125 +33,73 @@ public class OrderManagerController {
 
     @RequestMapping("get_order_list.do")
     @ResponseBody
-    public ServerResponse<PageInfo> orderList(HttpSession session, @RequestBody Map map){
+    public ServerResponse<PageInfo> orderList(HttpSession session, @RequestBody Map map) {
 
         Integer pageNum = Integer.valueOf(map.get("pageNum").toString());
         Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
 
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-//        if(user == null){
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录前台人员");
-//
-//        }
-        if(iUserService.checkManagerRole(user).isSuccess()){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        if (iUserService.checkManagerRole(user).isSuccess()) {
             //填充我们增加产品的业务逻辑
-            return iOrderService.getOrderList(pageNum,pageSize);
-        }else{
+            return iOrderService.getOrderList(pageNum, pageSize);
+        } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
     }
 
     @RequestMapping("get_order_detail.do")
     @ResponseBody
-    public ServerResponse orderDetail(HttpSession session, @RequestBody Map map){
+    public ServerResponse orderDetail(HttpSession session, @RequestBody Map map) {
 
         Integer orderId = Integer.valueOf(map.get("orderId").toString());
 
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-//        if(user == null){
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录前台人员");
-//
-//        }
-        if(iUserService.checkManagerRole(user).isSuccess()){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        if (iUserService.checkManagerRole(user).isSuccess()) {
             //填充我们增加产品的业务逻辑
 
             return iOrderService.getOrderDetail(orderId);
-        }else{
+        } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
     }
 
-//    @RequestMapping("get_order_staying.do")
-//    @ResponseBody
-//    public ServerResponse orderStay(HttpSession session, @RequestBody Map map){
-//
-//        Integer pageNum = Integer.valueOf(map.get("pageNum").toString());
-//        Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
-//
-//        User user = (User)session.getAttribute(Const.CURRENT_USER);
-////        if(user == null){
-////            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-////
-////        }
-//        if(iUserService.checkManagerRole(user).isSuccess()){
-//            //填充我们增加产品的业务逻辑
-//
-//            return iOrderService.getOrderByRoomStatus(Const.RoomStatus.STAYING,pageNum,pageSize);
-//        }else{
-//            return ServerResponse.createByErrorMessage("无权限操作");
-//        }
-//    }
 
     @RequestMapping("get_order_reserved.do")
     @ResponseBody
-    public ServerResponse orderReserved(HttpSession session, @RequestBody Map map){
+    public ServerResponse orderReserved(HttpSession session, @RequestBody Map map) {
 
         Integer pageNum = Integer.valueOf(map.get("pageNum").toString());
         Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
 
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-//        if(user == null){
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-//
-//        }
-        if(iUserService.checkManagerRole(user).isSuccess()){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        if (iUserService.checkManagerRole(user).isSuccess()) {
             //填充我们增加产品的业务逻辑
 
-            return iOrderService.getOrderByRoomStatus(Const.RoomStatus.RESERVED,pageNum,pageSize);
-        }else{
+            return iOrderService.getOrderByRoomStatus(Const.RoomStatus.RESERVED, pageNum, pageSize);
+        } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
     }
 
-//    @RequestMapping("get_order_unsubscribing.do")
-//    @ResponseBody
-//    public ServerResponse orderUnsubscribed(HttpSession session, @RequestBody Map map){
-//
-//        Integer pageNum = Integer.valueOf(map.get("pageNum").toString());
-//        Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
-//
-//        User user = (User)session.getAttribute(Const.CURRENT_USER);
-////        if(user == null){
-////            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-////
-////        }
-//        if(iUserService.checkManagerRole(user).isSuccess()){
-//            //填充我们增加产品的业务逻辑
-//
-//            return iOrderService.getOrderByRoomStatus(Const.RoomStatus.UNSUBSCRIBING, pageNum,pageSize);
-//        }else{
-//            return ServerResponse.createByErrorMessage("无权限操作");
-//        }
-//    }
 
     @RequestMapping("get_order_by_status.do")
     @ResponseBody
-    public ServerResponse getOrderByStatus(HttpSession session, @RequestBody Map map){
+    public ServerResponse getOrderByStatus(HttpSession session, @RequestBody Map map) {
 
         Integer pageNum = Integer.valueOf(map.get("pageNum").toString());
         Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
         Integer status = Integer.valueOf(map.get("status").toString());
 
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-//        if(user == null){
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-//
-//        }
-        if(iUserService.checkManagerRole(user).isSuccess()){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        if (iUserService.checkManagerRole(user).isSuccess()) {
             //填充我们增加产品的业务逻辑
 
-            return iOrderService.getOrderByRoomStatus(status, pageNum,pageSize);
-        }else{
+            return iOrderService.getOrderByRoomStatus(status, pageNum, pageSize);
+        } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
     }
@@ -160,70 +108,48 @@ public class OrderManagerController {
     //1
     @RequestMapping("set_order_checkin.do")
     @ResponseBody
-    public ServerResponse setOrderCheckin(HttpSession session, @RequestBody Map map){
+    public ServerResponse setOrderCheckin(HttpSession session, @RequestBody Map map) {
 
         Integer orderId = Integer.valueOf(map.get("orderId").toString());
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-//        if(user == null){
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-//
-//        }
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
 
         Order order = (Order) iOrderService.getOrderDetail(orderId).getData();
         Date reserveTime = order.getReserveTime();
         Date currentDate = new Date();
-//        if (reserveTime.compareTo(currentDate) > 0){
-//            return ServerResponse.createByErrorMessage("不在预定时间，无法入住");
-//        }
 
-       // if(iUserService.checkManagerRole(user).isSuccess()){
-            return iOrderService.setOrderRoomStatus(orderId,Const.RoomStatus.CHECKIN);
-//        }else{
-//            return ServerResponse.createByErrorMessage("无权限操作");
-//        }
+        return iOrderService.setOrderRoomStatus(orderId, Const.RoomStatus.CHECKIN);
+
     }
 
     //1
     @RequestMapping("set_order_stay.do")
     @ResponseBody
-    public ServerResponse setOrderStay(HttpSession session, @RequestBody Map map){
+    public ServerResponse setOrderStay(HttpSession session, @RequestBody Map map) {
 
         Integer orderId = Integer.valueOf(map.get("orderId").toString());
         Integer stayDays = Integer.valueOf(map.get("stayDays").toString());
 
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-//        if(user == null){
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-//
-//        }
-       // if(iUserService.checkManagerRole(user).isSuccess()){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
 
-            return iOrderService.setOrderStay(orderId,stayDays);
-//        }else{
-//            return ServerResponse.createByErrorMessage("无权限操作");
-//        }
+
+        return iOrderService.setOrderStay(orderId, stayDays);
+
     }
 
     //1
     @RequestMapping("set_order_unsubscribed.do")
     @ResponseBody
-    public ServerResponse setOrderUnsubscribed(HttpSession session, @RequestBody Map map){
+    public ServerResponse setOrderUnsubscribed(HttpSession session, @RequestBody Map map) {
 
         Integer orderId = Integer.valueOf(map.get("orderId").toString());
 
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-//        if(user == null){
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
-//
-//        }
-     //   if(iUserService.checkManagerRole(user).isSuccess()){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
 
-            return iOrderService.setOrderRoomStatus(orderId,Const.RoomStatus.UNSUBSCRIBED);
-//        }else{
-//            return ServerResponse.createByErrorMessage("无权限操作");
-//        }
+
+        return iOrderService.setOrderRoomStatus(orderId, Const.RoomStatus.UNSUBSCRIBED);
+
     }
-
 
 
 }

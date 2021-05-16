@@ -35,9 +35,7 @@ public class RoomCustomerController {
         Integer roomId = Integer.valueOf(map.get("roomId").toString());
 
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登陆，请登录");
-//        }
+
         return iRoomService.getRoomDetail(roomId);
     }
 
@@ -48,9 +46,6 @@ public class RoomCustomerController {
         Integer pageNum = Integer.valueOf(map.get("pageNum").toString());
         Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登陆，请登录");
-//        }
 
         return iRoomService.getRoomList(pageNum, pageSize);
 
@@ -65,9 +60,7 @@ public class RoomCustomerController {
         String roomName = map.get("roomName").toString();
 
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登陆，请登录");
-//        }
+
         return iRoomService.searchRoomByName(roomName, pageNum, pageSize);
 
     }
@@ -82,9 +75,7 @@ public class RoomCustomerController {
         Integer status = Integer.valueOf(map.get("status").toString());
 
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登陆，请登录");
-//        }
+
         return iRoomService.searchRoomByStatus(status, pageNum, pageSize);
 
     }
@@ -100,8 +91,8 @@ public class RoomCustomerController {
         String reserveTime = map.get("reserveTime").toString();
         String reserveEndTime = map.get("reserveEndTime").toString();
 
-        if (StringUtils.isBlank(reserveTime) || StringUtils.isBlank(reserveEndTime)){
-            return iRoomService.getRoomList(pageNum,pageSize);
+        if (StringUtils.isBlank(reserveTime) || StringUtils.isBlank(reserveEndTime)) {
+            return iRoomService.getRoomList(pageNum, pageSize);
         }
 
         Date reserveTime1 = DateTimeUtil.strToDate(reserveTime);
@@ -111,10 +102,8 @@ public class RoomCustomerController {
         String reserveEndTime2 = String.valueOf(reserveEndTime1.getTime());
 
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登陆，请登录");
-//        }
-        return iRoomService.searchRoomByTime(reserveTime2,reserveEndTime2,pageNum,pageSize);
+
+        return iRoomService.searchRoomByTime(reserveTime2, reserveEndTime2, pageNum, pageSize);
 
     }
 

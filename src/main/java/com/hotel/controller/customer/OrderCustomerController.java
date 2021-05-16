@@ -31,7 +31,6 @@ public class OrderCustomerController {
     IOrderService iOrderService;
 
 
-
     @RequestMapping("create_my_order.do")
     @ResponseBody
     public ServerResponse orderCreate(HttpSession session, @RequestBody Map map) {
@@ -58,6 +57,7 @@ public class OrderCustomerController {
         order.setRoomNumber(roomNumber);
         order.setRealName(realName);
 
+
         order.setStayDays(0);
 
 
@@ -70,10 +70,7 @@ public class OrderCustomerController {
     public ServerResponse orderDetail(HttpSession session) {
 
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
-//
-//        }
+
         return iOrderService.getOrderByUserId(user.getId());
 
     }
@@ -84,10 +81,7 @@ public class OrderCustomerController {
     public ServerResponse orderUpdate(HttpSession session, Order order) {
 
         User user = (User) session.getAttribute(Const.CURRENT_USER);
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
-//
-//        }
+
         Integer orderId = order.getId();
         Order order1 = (Order) iOrderService.getOrderDetail(orderId).getData();
         if (!order1.getUserId().equals(order.getUserId())) {
@@ -97,53 +91,12 @@ public class OrderCustomerController {
 
     }
 
-//    //废弃
-//    @RequestMapping("my_order_unsubscribing.do")
-//    @ResponseBody
-//    public ServerResponse setOrderUnsubscribed(HttpSession session, @RequestBody Map map) {
-//
-//        Integer orderId = Integer.valueOf(map.get("orderId").toString());
-//
-//        User user = (User) session.getAttribute(Const.CURRENT_USER);
-////        if (user == null) {
-////            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
-////
-////        }
-//
-//        return iOrderService.setOrderRoomStatus(orderId, Const.RoomStatus.UNSUBSCRIBING);
-//    }
-
-//    //废弃
-//    @RequestMapping("my_order_staying.do")
-//    @ResponseBody
-//    public ServerResponse setOrderStaying(HttpSession session, @RequestBody OrderStayBo orderStayBo) {
-//
-//        User user = (User) session.getAttribute(Const.CURRENT_USER);
-////        if (user == null) {
-////            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
-////
-////        }
-//        Integer orderId = orderStayBo.getOrderId();
-//        Order order1 = (Order) iOrderService.getOrderDetail(orderId).getData();
-//        if (!order1.getUserId().equals(user.getId())) {
-//            return ServerResponse.createByErrorMessage("横向越权");
-//        }
-//        return iOrderService.setOrderStaying(user.getId(),orderStayBo);
-//    }
 
     @RequestMapping("my_order_pay.do")
     @ResponseBody
     public ServerResponse setOrderPay(HttpSession session, @RequestBody Map map) {
 
         Integer orderId = Integer.valueOf(map.get("orderId").toString());
-
-
-//        if (user == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
-//
-//        }
-//
-//        Order order1 = (Order) iOrderService.getOrderDetail(orderId).getData();
 
 
         return iOrderService.myOrderPay(orderId);

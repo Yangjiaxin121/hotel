@@ -26,23 +26,23 @@ public class UserAdminController {
     @Autowired
     private IUserService iUserService;
 
-    @ApiOperation(value="管理员登陆", notes="管理员登陆",httpMethod = "POST")
+    @ApiOperation(value = "管理员登陆", notes = "管理员登陆", httpMethod = "POST")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "管理员用户名", required = true, paramType="String"),
-            @ApiImplicitParam(name = "password", value = "管理员密码", required = true, paramType="String"),
+            @ApiImplicitParam(name = "username", value = "管理员用户名", required = true, paramType = "String"),
+            @ApiImplicitParam(name = "password", value = "管理员密码", required = true, paramType = "String"),
     })
-    @RequestMapping(value="login.do",method = RequestMethod.POST)
+    @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse login(
-            @RequestBody Map map){
+            @RequestBody Map map) {
 
         String username = map.get("username").toString();
         String password = map.get("password").toString();
 
 
-        ServerResponse<User> response = iUserService.login(username,password);
+        ServerResponse<User> response = iUserService.login(username, password);
         User user = response.getData();
-        if (user != null){
+        if (user != null) {
             Integer userId = response.getData().getId();
             return ServerResponse.createBySuccess(userId);
         }
@@ -51,15 +51,14 @@ public class UserAdminController {
     }
 
 
-
-    @ApiOperation(value="获取所有用户", notes="获取所有用户",httpMethod = "POST")
+    @ApiOperation(value = "获取所有用户", notes = "获取所有用户", httpMethod = "POST")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "第几页", required = true, paramType="Integer"),
-            @ApiImplicitParam(name = "pageSize", value = "每页显示的条数", required = true, paramType="pageSize"),
+            @ApiImplicitParam(name = "pageNum", value = "第几页", required = true, paramType = "Integer"),
+            @ApiImplicitParam(name = "pageSize", value = "每页显示的条数", required = true, paramType = "pageSize"),
     })
-    @RequestMapping(value="get_all_customer.do",method = RequestMethod.POST)
+    @RequestMapping(value = "get_all_customer.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse getAllCustomer(@RequestBody Map map ){
+    public ServerResponse getAllCustomer(@RequestBody Map map) {
 
         Integer pageNum = Integer.valueOf(map.get("pageNum").toString());
         Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
@@ -67,58 +66,42 @@ public class UserAdminController {
 
     }
 
-    @ApiOperation(value="根据用户的特征查找用户", notes="获取所有用户",httpMethod = "POST")
+    @ApiOperation(value = "根据用户的特征查找用户", notes = "获取所有用户", httpMethod = "POST")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "第几页", required = true, paramType="Integer"),
-            @ApiImplicitParam(name = "pageSize", value = "每页显示的条数", required = true, paramType="pageSize"),
+            @ApiImplicitParam(name = "pageNum", value = "第几页", required = true, paramType = "Integer"),
+            @ApiImplicitParam(name = "pageSize", value = "每页显示的条数", required = true, paramType = "pageSize"),
     })
-    @RequestMapping(value="get_customer_by_attribute.do")
+    @RequestMapping(value = "get_customer_by_attribute.do")
     @ResponseBody
-    public ServerResponse getCustomerByAttribute(@RequestBody UserBo userBo ){
+    public ServerResponse getCustomerByAttribute(@RequestBody UserBo userBo) {
 
 
         Integer pageNum = userBo.getPageNum();
         Integer pageSize = userBo.getPageSize();
         User user = userBo.getUser();
-//        Integer pageNum = Integer.valueOf(map.get("pageNum").toString());
-//        Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
 
-//        User user = new User();
-//        if (map.containsKey("id")){
-//            user.setId(Integer.valueOf(map.get("id").toString()));
-//        }
-//        if (map.containsKey("username")){
-//            user.setUsername(map.get("username").toString());
-//        }
-//        if (map.containsKey("email"))
-        return iUserService.getUserByAttribute(user,pageNum,pageSize);
+        return iUserService.getUserByAttribute(user, pageNum, pageSize);
 
     }
 
 
-
-    @RequestMapping(value = "get_user_by_id.do",method = RequestMethod.POST)
+    @RequestMapping(value = "get_user_by_id.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse getUserInfo(@RequestBody Map map){
+    public ServerResponse getUserInfo(@RequestBody Map map) {
 
         Integer userId = Integer.valueOf(map.get("userId").toString());
 
         return iUserService.getInformation(userId);
     }
 
-    @RequestMapping(value = "deletet_user_by_id.do",method = RequestMethod.POST)
+    @RequestMapping(value = "deletet_user_by_id.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse deleteUserById(@RequestBody Map map){
+    public ServerResponse deleteUserById(@RequestBody Map map) {
 
         Integer userId = Integer.valueOf(map.get("userId").toString());
 
         return iUserService.deleteUserById(userId);
     }
-
-
-
-
-
 
 
 }
